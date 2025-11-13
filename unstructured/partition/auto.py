@@ -300,6 +300,7 @@ def file_and_type_from_url(
     ssl_verify: bool = True,
     request_timeout: Optional[int] = None,
 ) -> tuple[io.BytesIO, FileType]:
+    print(f"partition.auto use file_and_type_from_url, timeout={request_timeout}")
     response = requests.get(url, headers=headers, verify=ssl_verify, timeout=request_timeout)
     response.raise_for_status()
     
@@ -312,6 +313,7 @@ def file_and_type_from_url(
     encoding = response.encoding
 
     filetype = detect_filetype(file=file, encoding=encoding, content_type=content_type)
+    print("file_and_type_from_url done")
     return file, filetype
 
 
