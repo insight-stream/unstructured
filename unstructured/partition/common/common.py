@@ -295,7 +295,17 @@ def convert_office_doc(
         # only one soffice process can be ran
         wait_time = 0
         sleep_time = 0.1
-        output = subprocess.run(command, capture_output=True)
+
+        try:
+            output = subprocess.run(
+                command,
+                capture_output=True,
+                timeout=600,
+            )
+        except subprocess.TimeoutExpired:
+            print("soffice timed out after 600 seconds")
+            # опционально: убить висящие процессы soffice
+            raise
         message = output.stdout.decode().strip()
         # we can't rely on returncode unfortunately because on macOS it would return 0 even when the
         # command failed to run; instead we have to rely on the stdout being empty as a sign of the
@@ -306,6 +316,16 @@ def convert_office_doc(
                 sleep(sleep_time)
             else:
                 output = subprocess.run(command, capture_output=True)
+                try:
+                    output = subprocess.run(
+                        command,
+                        capture_output=True,
+                        timeout=600,
+                    )
+                except subprocess.TimeoutExpired:
+                    print("soffice timed out after 600 seconds")
+                    # опционально: убить висящие процессы soffice
+                    raise
                 message = output.stdout.decode().strip()
     except FileNotFoundError:
         raise FileNotFoundError(
