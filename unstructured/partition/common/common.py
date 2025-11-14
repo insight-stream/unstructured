@@ -315,7 +315,7 @@ def convert_office_doc(
             if _is_soffice_running():
                 sleep(sleep_time)
             else:
-                output = subprocess.run(command, capture_output=True)
+                #output = subprocess.run(command, capture_output=True)
                 try:
                     output = subprocess.run(
                         command,
