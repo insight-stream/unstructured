@@ -47,6 +47,7 @@ def partition_doc(
         This information will be reflected in elements' metadata and can be be especially
         useful when partitioning a document that is part of a larger document.
     """
+    print("start partition_doc")
     exactly_one(filename=filename, file=file)
 
     last_modified = get_last_modified_date(filename) if filename else None
@@ -65,18 +66,21 @@ def partition_doc(
 
         # -- when source is a file-like object, write it to the filesystem so the command-line
         # -- process can access it (CLI executes in different memory-space).
+        print(f"source_file_path {source_file_path}")
         if file is not None:
             with open(source_file_path, "wb") as f:
                 f.write(file.read())
 
         # -- convert the .doc file to .docx. The resulting file takes the same base-name as the
         # -- source file and is written to `target_dir`.
+        print("start convert_office_doc")
         convert_office_doc(
             source_file_path,
             target_dir,
             target_format="docx",
             target_filter=libre_office_filter,
         )
+        print(f"convert_office_doc done {source_file_path}")
 
         # -- compute the path of the resulting .docx document --
         _, filename_no_path = os.path.split(os.path.abspath(source_file_path))
