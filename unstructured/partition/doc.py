@@ -86,6 +86,7 @@ def partition_doc(
         # -- and partition it. Note that `kwargs` is not passed which is a sketchy way to partially
         # -- disable post-partitioning processing (what the decorators do) so for example the
         # -- resulting elements are not double-chunked.
+        print("ready to partition_docx")
         elements = partition_docx(
             filename=target_file_path,
             metadata_filename=metadata_filename or filename,
@@ -93,6 +94,7 @@ def partition_doc(
             metadata_last_modified=metadata_last_modified or last_modified,
             **kwargs,
         )
+        print("partition_docx done")
 
     # -- Remove temporary document.docx path from metadata when necessary. Note `metadata_filename`
     # -- defaults to `None` but that's better than a meaningless temporary filename.
