@@ -289,8 +289,12 @@ def partition(
     partitioning_kwargs["extract_image_block_to_payload"] = extract_image_block_to_payload
 
     partition = partitioner_loader.get(file_type)
+    print("partitioner_loader was chosen")
     elements = partition(filename=filename, file=file, **partitioning_kwargs)
-    return augment_metadata(elements)
+    print("done get elements")
+    res = augment_metadata(elements)
+    print("done augment_metadata")
+    return res
 
 
 def file_and_type_from_url(
